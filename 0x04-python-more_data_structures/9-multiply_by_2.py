@@ -1,3 +1,13 @@
 #!/usr/bin/python3
-def only_diff_elements(set_1, set_2):
-        return(set_1 ^ set_2)
+def multiply_by_2(a_dictionary):
+    if a_dictionary is not None:
+        dict = {}
+        tmp = {}
+        for key, value in a_dictionary.items():
+            newval = value * 2
+            tmp = {key: newval}
+            dict.update(tmp)
+        return (dict)
+    return None
+
+# return {key: a_dictionary[key]*2 for key in a_dictionary}
