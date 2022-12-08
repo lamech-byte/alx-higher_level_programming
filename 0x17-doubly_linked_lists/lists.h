@@ -3,7 +3,7 @@
 
 /*
  * File: lists.h
- * Auth: Brennan D Baraban
+ * Auther: Lameck
  */
 
 #include <stdio.h>
@@ -16,7 +16,7 @@
  * @next: points to the next node
  *
  * Description: doubly linked list node structure
- * for Holberton project
+ * for alx project
  */
 typedef struct dlistint_s
 {
