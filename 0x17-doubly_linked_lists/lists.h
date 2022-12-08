@@ -3,7 +3,7 @@
 
 /*
  * File: lists.h
- * Auther: Lameck
+ * Author: Lameck
  */
 
 #include <stdio.h>
