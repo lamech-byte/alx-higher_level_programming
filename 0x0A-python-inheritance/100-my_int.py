@@ -29,4 +29,4 @@ class MyInt(int):
         Return:
            True if both equal
         """
-        return self.num == 
+        return self.num == other
