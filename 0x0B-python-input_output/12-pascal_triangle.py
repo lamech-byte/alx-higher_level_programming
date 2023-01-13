@@ -1,44 +1,41 @@
 #!/usr/bin/python3
 """
-Module 12-student
-Contains class Student
-that initializes public instance attributes first_name, last_name, and age,
-and has public method to_json that returns dictionary representation
-of requested attributes or all if none were requested
+Module 14-pascal_triangle
+Contains function that returns int lists of pascal triangle of any given size
 """
 
 
-class Student():
+def pascal_triangle(n):
     """
-    Public Attributes:
-        first_name
-        last_name
-        age
-    Public Methods:
-        to_json: retrieves its dictionary representation
+    Return:
+        empty list [] if n <= 0
+        if n is 7, we should expect:
+            [1]
+            [1, 1]
+            [1, 2, 1]
+            [1, 3, 3, 1]
+            [1, 4, 6, 4, 1]
+            [1, 5, 10, 10, 5, 1]
+            [1, 6, 15, 20, 15, 6, 1]
     """
-    def __init__(self, first_name, last_name, age):
-        """
-        Initializes student with full name and age
-        """
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
+    if n <= 0:
+        return []
+    if n == 1:
+        return [[1]]
 
-    def to_json(self, attrs=None):
-        """
-        Returns dictionary description with simple data structure
-        (list, dictionary, dictionary, string)
-        for JSON serialization of an object
-        Return:
-            Only return dict of attrs given to us
-            Return entire dict if no attrs given
-        """
-        if attrs is None:
-            return self.__dict__
-        else:
-            dic = {}
-            for att in attrs:
-                if att in self.__dict__.keys():
-                    dic[att] = self.__dict__[att]
-            return dic
+    triangle = [[1]]
+    for rows in range(n-1):
+        triangle.append([a+b for a, b
+                         in zip([0] + triangle[-1], triangle[-1] + [0])])
+    return triangle
+
+# C implementation of the last Pythonic loop
+#
+#    triangle = [[1]]
+#    for rows in range(n-1):
+#        l = [1]
+#        for i in range(rows):
+#            l.append(triangle[-1][i] + triangle[-1][i+1])
+#        l.append(1)
+#        triangle.append(l)
+#    return triangle
