@@ -1,11 +1,5 @@
 #!/usr/bin/python3
-"""
-Module 1-write_file
-Contains function that writes to text file and returns num chars written
-"""
+write_file = __import__('1-write_file').write_file
 
-
-def write_file(filename="", text=""):
-    """writes to text file and returns num chars written"""
-    with open(filename, mode="w", encoding="utf-8") as f:
-        return(f.write(text))
+nb_characters = write_file("my_first_file.txt", "Holberton School is so cool!\n")
+print(nb_characters)
