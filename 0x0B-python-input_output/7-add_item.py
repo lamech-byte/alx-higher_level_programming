@@ -1,17 +1,27 @@
 #!/usr/bin/python3
 """
-Module 7-save_to_json_file
-Contains function that writes Python obj to file using JSON represenation
+Module 7-add_item
+Contains function that adds and saves to Python obj to JSON file; loads objects
+# run with ./9-add_item.py
+#
+# cat add_item.json ; echo ""
+# expect output: []
+#
+# ./9-add_item.py some random args
+# cat add_item.json ; echo ""
+# expect output: ["some", "random", "args"]
 """
 
 
-def save_to_json_file(my_obj, filename):
-    """Writes Python obj to file using JSON represenation
-    Args:
-        my_obj: python object
-        filename: file
-    """
-    import json
+from sys import argv
+save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
+load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
 
-    with open(filename, mode="w", encoding="utf-8") as f:
-        json.dump(my_obj, f)
+filename = "add_item.json"
+
+try:
+    existing_content = load_from_json_file(filename)
+except FileNotFoundError:
+    existing_content = []
+
+save_to_json_file(existing_content + argv[1:], filename)
