@@ -1,14 +1,15 @@
 #!/usr/bin/python3
-"""
-Module 1-number_of_lines
-Contains function that returns number of lines in text file
-"""
+# 4-append_write.py
+"""Defines a file-appending function."""
 
 
-def number_of_lines(filename=""):
-    """Return number of lines in text file"""
-    with open(filename, mode="r", encoding="utf-8") as f:
-        lines = 0
-        for line in f:
-            lines += 1
-    return lines
+def append_write(filename="", text=""):
+    """Appends a string to the end of a UTF8 text file.
+    Args:
+        filename (str): The name of the file to append to.
+        text (str): The string to append to the file.
+    Returns:
+        The number of characters appended.
+    """
+    with open(filename, "a", encoding="utf-8") as f:
+        return f.write(text)
