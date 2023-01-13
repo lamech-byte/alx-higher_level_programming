@@ -1,11 +1,17 @@
 #!/usr/bin/python3
 """
-Module 4-append_write
-Contains function that appends to text file and returns num chars added
+Module 4-from_json_string
+Contains function that returns python data structure from JSON string
 """
 
 
-def append_write(filename="", text=""):
-    """appends to text file and returns num chars added"""
-    with open(filename, mode="a", encoding="utf-8") as f:
-        return(f.write(text))
+def from_json_string(my_str):
+    """Returns python data structure from JSON string
+    Args:
+        my_str: json string representation
+    Return:
+        python object
+    """
+    import json
+
+    return json.loads(my_str)
