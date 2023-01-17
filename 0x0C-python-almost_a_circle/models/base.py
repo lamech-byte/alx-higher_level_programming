@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 Module contains class Base
+
 Contains private class __nb_objects, and class constructor __init__
 Returns JSON string representation of list dictionaries
 Saves JSON strings of instance dictionaries into file
