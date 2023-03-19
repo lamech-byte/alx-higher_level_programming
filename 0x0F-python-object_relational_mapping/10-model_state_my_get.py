@@ -1,27 +1,31 @@
 #!/usr/bin/python3
-# Lists the State object with the name passed as argument
-# from the database hbtn_0e_6_usa.
-# Usage: ./10-model_state_my_get.py <mysql username> /
-#                                   <mysql password> /
-#                                   <database name>
-#                                   <state name searched>
-import sys
+"""
+return state id given state name; SQL injection free
+parameters given to script: username, password, database, state name to match
+"""
+
+from sys import argv
+from model_state import Base, State
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model_state import State
+
 
 if __name__ == "__main__":
-    engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
-                           .format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
+
+    # make engine for database
+    user = argv[1]
+    passwd = argv[2]
+    db = argv[3]
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
+                           format(user, passwd, db), pool_pre_ping=True)
+    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    found = False
-    for state in session.query(State):
-        if state.name == sys.argv[4]:
-            print("{}".format(state.id))
-            found = True
-            break
-    if found is False:
+    # query python instance in database state id given state name
+    state = session.query(State).filter_by(name=argv[4]).first()
+    if state:
+        print("{:d}".format(state.id))
+    else:
         print("Not found")
+    session.close()
