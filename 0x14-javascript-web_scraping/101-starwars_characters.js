@@ -3,26 +3,33 @@
 const request = require('request');
 
 const movieId = process.argv[2];
-const movieUrl = `https://swapi.dev/api/films/${movieId}/`;
+const baseUrl = 'https://swapi.dev/api';
+const filmUrl = `${baseUrl}/films/${movieId}/`;
+const charactersUrl = `${baseUrl}/people/`;
 
-// First request to get movie details
-request(movieUrl, function (error, response, body) {
-  if (error) {
-    console.error(error);
+// Get list of characters in correct order
+request.get(`${baseUrl}/films/`, (err, res, body) => {
+  if (err) {
+    console.error(err);
     return;
   }
-  const movieData = JSON.parse(body);
-  const charactersUrls = movieData.characters;
+  const films = JSON.parse(body).results;
+  const characters = films.find(f => f.url === filmUrl).characters;
+  const characterNames = new Array(characters.length);
 
-  // Second request to get character details
-  charactersUrls.forEach(function (url) {
-    request(url, function (error, response, body) {
-      if (error) {
-        console.error(error);
+  // Get character names in correct order
+  characters.forEach((charUrl, index) => {
+    request.get(charUrl, (err, res, body) => {
+      if (err) {
+        console.error(err);
         return;
       }
-      const characterData = JSON.parse(body);
-      console.log(characterData.name);
+      characterNames[index] = JSON.parse(body).name;
+
+      // Print character names when all have been retrieved
+      if (characterNames.filter(Boolean).length === characters.length) {
+        characterNames.forEach(name => console.log(name));
+      }
     });
   });
 });
