@@ -3,37 +3,26 @@
 const request = require('request');
 
 const movieId = process.argv[2];
+const movieUrl = `https://swapi.dev/api/films/${movieId}/`;
 
-const movieUrl = `https://swapi-api.hbtn.io/api/films/${movieId}`;
-
+// First request to get movie details
 request(movieUrl, function (error, response, body) {
   if (error) {
     console.error(error);
     return;
   }
+  const movieData = JSON.parse(body);
+  const charactersUrls = movieData.characters;
 
-  const charactersUrls = JSON.parse(body).characters;
-  const charactersNames = [];
-
-  let completedRequests = 0;
-
-  for (const url of charactersUrls) {
+  // Second request to get character details
+  charactersUrls.forEach(function (url) {
     request(url, function (error, response, body) {
       if (error) {
         console.error(error);
         return;
       }
-
-      const characterName = JSON.parse(body).name;
-      charactersNames.push(characterName);
-
-      completedRequests++;
-
-      if (completedRequests === charactersUrls.length) {
-        for (const name of charactersNames) {
-          console.log(name);
-        }
-      }
+      const characterData = JSON.parse(body);
+      console.log(characterData.name);
     });
-  }
+  });
 });
