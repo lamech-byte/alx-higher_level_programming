@@ -5,7 +5,6 @@ const request = require('request');
 const movieId = process.argv[2];
 const baseUrl = 'https://swapi.dev/api';
 const filmUrl = `${baseUrl}/films/${movieId}/`;
-const charactersUrl = `${baseUrl}/people/`;
 
 // Get list of characters in correct order
 request.get(`${baseUrl}/films/`, (err, res, body) => {
